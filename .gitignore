@@ -1,2 +1,6 @@
 .env
+.env.docker
 test.py
+db/
+static/*
+node_modules/

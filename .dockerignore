@@ -1,0 +1,12 @@
+.git/
+.gitignore
+.env
+.env.default
+db/
+node_modules/
+venv/
+static/
+nginx.conf
+Dockerfile
+README.md
+requirements.txt
