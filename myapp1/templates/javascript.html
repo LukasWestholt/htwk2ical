@@ -1,0 +1,9 @@
+{% load list_action %}
+{% empty_list "3" as e %}
+<script>
+    let DJANGO_group = "{% url 'groups' %}";
+    let DJANGO_studium_generale = "{% url 'studium_generale' %}";
+    let DJANGO_divider = "{{ divider }}";
+    let DJANGO_dummy_id_str = "{{ e|join:"-" }}";
+    let DJANGO_dummy_href = "{% url 'calendar_modules' group_ids=e|join:"-" %}";
+</script>

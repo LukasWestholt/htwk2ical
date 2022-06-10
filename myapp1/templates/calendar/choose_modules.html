@@ -1,73 +1,55 @@
 {% extends "layouts/application.html" %}
 {% load static %}
 {% block content %}
+    {% include "javascript.html" %}
     {% include "calendar/flash_messages.html" %}
     <div class="content-wrapper">
         <h1 class="instruction">
             Wähle Module aus, die in<br/>
             deinem Stundenplan angezeigt werden sollen
         </h1>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
-        {% include "shared/groups_form.html" %}
-            <form accept-charset="UTF-8" action="{% url 'calendar_link' %}" class="choose-modules width-wrapper-lg"
-              id="choose-modules" method="post" data-form-type="register,step">
-
-            {% for group in groups %}
-                <h2>{{ group.title }}</h2>
-                <div id="group-modules-wrapper-{{ group.id }}" class="group-modules-wrapper">
-                    <div id="my-app" class="my-container">
-                        {% for module in group.modules %}
-                            {% if forloop.counter0|divisibleby:"3" %}
-                                </div>
-                                <div class="row">
-                            {% endif %}
-                            <div class="col-sm-4">
+        <form accept-charset="UTF-8" action="{% url 'calendar_link' %}" class="choose-modules width-wrapper-lg"
+              id="choose-modules" method="post" data-form-type="register,step">{% csrf_token %}
+            {{ formset.management_form }}
+            {% for form in formset %}
+                <div class="group-wrapper">
+                    <h2>{{ form.group_title }}</h2>
+                    <div class="group-modules-wrapper">
+                        {% if form.modules %}
+                            {{ form.modules.management_form }}
+                            {% for module_form in form.modules %}
                                 <div class="input-group">
-                  <span class="input-group-addon">
-                      <input checked="checked" id="module_ids_{{ module.id }}" name="module_ids[]" type="checkbox"
-                             value="{{ module.id }}" data-form-type="other">
-                  </span>
-                                    <input class="form-control" id="module_aliases_{{ module.id }}"
-                                           name="module_aliases[{{ module.id }}]" type="text" value="{{ module.name }}"
-                                           data-form-type="other">
+                                    {{module_form.module_aliases}}
+                                    {{module_form.module_workgroups}}
+                                    {{module_form.module_id}}
+                                  <button type="button" class="del_el"><span class="bi bi-trash"></span></button>
                                 </div>
-                            </div>
-                        {% endfor %}
-                        <input id="group_ids_" name="group_ids[]" type="hidden" value="{{ group.id }}">
-
+                            {% endfor %}
+                            {% for input in form.hidden_fields %}
+                                {{input}}
+                            {% endfor %}
+                        {% endif %}
                         {% if forloop.counter0 == 0 %}
-                            </div>
-                            <div class="row">
-                            <div class="col-sm-4 studium-generale-ellipses">
-
-                                <%= link_to 'Studium Generale hinzufügen?', '#',
-                                :id => "studium_generale_link",
-                                :class => 'studium-generale-link' %>
+                            <div class="studium-generale-ellipses">
+                                <a href="#" id="studium_generale_link" class="studium-generale-link">Studium Generale hinzufügen?</a>
                             </div>
                         {% endif %}
-                        </div>
+                    </div>
+                    <div class="add-selection">
+                        Add to selection:
+                    </div>
+                    <button class="reset-selection" type="button">Reset</button>
+                    <hr/>
                 </div>
-                <p class="row text-center">
-                    <input class="batch-selector" data-target="group-modules-wrapper-{{ module.id }}" checked="checked"
-                           id="uncheck_{{ module.id }}" name="uncheck_{{ module.id }}" type="checkbox"
-                           data-form-type="other">
-                    <label for="uncheck_{{ module.id }}">alle/keine Module</label>
-                </p>
-
-                <hr/>
             {% endfor %}
-            <button id="add_el">Add element</button>
-
             <p class="text-center choose-more-groups-wrapper">
                 Du hast Module aus einem anderen Studiengang belegt?<br/>
-                <%= link_to 'Module aus anderem Studiengang hinzufügen',
-                @choose_groups_link,
-                :class => 'btn-link btn-success',
-                :id => 'choose-more-groups-cta' %>
+                <a href="{{ choose_groups_link }}" id="choose-more-groups-cta" class="btn btn-link">
+                    Module aus anderem Studiengang hinzufügen
+                </a>
             </p>
 
-            <input class="btn btn-success btn-lg btn-create-calendar" name="commit" type="submit"
+            <input class="btn btn-success btn-lg btn-create-calendar text-wrap" name="commit" type="submit"
                    value="Kalender erstellen" data-form-type="action,next">
         </form>
     </div>

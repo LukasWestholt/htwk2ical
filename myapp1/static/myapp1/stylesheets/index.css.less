@@ -3,7 +3,7 @@
 .jumbo {padding:36px 5% 120px;
   h1 {font-size:72px; line-height:130%; word-wrap:break-word; color:#fff;}
   p {font-weight:@alternatingFontWeight; color:#ddd;}
-  #create-calendar-cta {display:block; margin:0 auto 5px; padding:16px; font-size:20px; width:200px;}
+  #create-calendar-cta {display:table; margin:0 auto 5px; padding:16px; font-size:20px}
 }
 
 .jumbo-sub {margin-bottom:65px; font-size:30px; text-align:center; line-height:130%;}
@@ -19,8 +19,7 @@
   p {margin:0 20px 10px 0; font-size:1.3em; text-align:center;
     @media (max-width: 767px) {margin-bottom:30px;}
   }
-  .glyphicon {display:block; margin-bottom:15px; font-size:96px; text-align:center; color:@mainGreen;}
-  .glyphicon-cloud {position:relative; top:24px;}
+  .bi {display:block; margin-bottom:15px; font-size:96px; text-align:center; color:@mainGreen;}
   h2 {margin:32px 0 52px; font-size:28px; font-weight:bold; line-height:110%; text-align:center;
     @media (max-width: 767px) {margin-bottom:32px;}
   }
@@ -51,8 +50,4 @@
   h2 {color:@mainGreen;}
   p {margin-top:30px; font-size:1.3em;}
   small {display:block; margin-top:30px;}
-}
-
-.col-sg-image {float:right; text-align:right;
-  @media (max-width: 767px) {float:none; text-align:center;}
 }

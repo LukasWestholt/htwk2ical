@@ -1,7 +1,7 @@
 // GENERAL
 // -----------------------------------------------------------------------------
-.choose-subjects-wrapper {height:100px; margin:0;} // height for static animation scope without elements jumping up/down
-.subject-title-bg {position:relative; margin:8px auto 0; max-width:500px;
+.choose-groups-wrapper {height:100px; margin:0;} // height for static animation scope without elements jumping up/down
+.group-title-bg {position:relative; margin:8px auto 0; max-width:500px;
   // TODO fix
   // .transition(background 0.2s ease-in-out);
 
@@ -11,31 +11,43 @@
 }
 
 // TODO why being so specific?
-input.subject-titles {// display:block; width:95.5%; margin:0 auto; padding:8px; font-size:18px;
+input.group-titles {// display:block; width:95.5%; margin:0 auto; padding:8px; font-size:18px;
   // TODO fix
   // &.error {border-color:@errorText;}
 }
 
-#submit-link, #add-subject-title {display:block; font-weight:bold;}
+#submit-link, #add-group-title {display:block; font-weight:bold;}
 .submit-btn {display:none;}
-.ui-autocomplete {max-height:300px; overflow:auto; padding:0;}
-.ui-menu .ui-menu-item a {padding:0.4em 16px;}
-.ui-widget-content .ui-state-focus {background:@mainGreen; border:none; border-radius:0; color:#fff;}
+.ui-autocomplete {
+  max-height:300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.ui-menu .ui-menu-item div {
+  padding:0.4em 16px;
+}
+.ui-widget-content .ui-state-focus, .ui-widget-content .ui-state-active {
+  background:@mainGreen;
+  border:none;
+  border-radius:0;
+  color:#fff;
+  margin: 0;
+}
 
 // LANDING-PAGE
 // -----------------------------------------------------------------------------
 #create-calendar-wrapper {color:@lighterGrey; text-align: center; margin-bottom:0;} // margin-bottom for animation smoothness
-.landing-page #subject-title-wrapper {display:none;} // will be shown when #create-calendar-cta is clicked
+.landing-page #group-title-wrapper {display:none;} // will be shown when #create-calendar-cta is clicked
 
 
-// CHOOSE COURSES
+// CHOOSE MODULES
 // -----------------------------------------------------------------------------
-#add-subject-title {z-index:1;
+#add-group-title {z-index:1;
   // TODO fix
   // .transition(top 0.2s ease-in-out);
 }
 .not-landing-page  {
-  .choose-subjects-wrapper {height:auto;}
-  .subject-title-bg {margin-top:30px;}
+  .choose-groups-wrapper {height:auto;}
+  .group-title-bg {margin-top:30px;}
   #submit-link {position:static; width:100px; margin:80px auto 0; font-weight:@alternatingFontWeight;}
 }

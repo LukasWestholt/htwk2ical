@@ -127,7 +127,7 @@ LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
 
-TIME_ZONE = 'CET'
+TIME_ZONE = 'Europe/Berlin'
 
 USE_I18N = True
 
@@ -147,7 +147,12 @@ STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_STORAGE = 'pipeline.storage.PipelineManifestStorage'
 
 STATICFILES_DIRS = [
-    "vendor",
+    ("vendor/jquery", "node_modules/jquery/dist"),
+    ("vendor/jquery-ui", "node_modules/jquery-ui/ui"),
+    ("vendor/jquery-ui-themes", "node_modules/jquery-ui/themes/base"),
+    ("vendor/js-cookie", "node_modules/js-cookie/dist"),
+    ("vendor/bootstrap", "node_modules/bootstrap/dist"),
+    ("vendor/bootstrap-icons", "node_modules/bootstrap-icons/font")
 ]
 
 STATICFILES_FINDERS = (
@@ -169,10 +174,15 @@ PIPELINE = {
     'STYLESHEETS': {
         'application': {
             'source_filenames': (
-                'assets/stylesheets/jquery.ui.theme.css',
-                'assets/stylesheets/jquery.ui.core.css',
-                'assets/stylesheets/jquery.ui.autocomplete.css',
-                'assets/javascripts/bootstrap/css/bootstrap.css',
+                # -- bootstrap and bootstrap-icons
+                'vendor/bootstrap/css/bootstrap.css',
+                'vendor/bootstrap-icons/bootstrap-icons.css',
+                # -- autocompleting by jquery-ui
+                'vendor/jquery-ui-themes/theme.css',
+                'vendor/jquery-ui-themes/core.css',
+                'vendor/jquery-ui-themes/autocomplete.css',
+                'vendor/jquery-ui-themes/menu.css',
+                # ---
                 'myapp1/stylesheets/bootstrap_and_overrides.css.less',
             ),
             'output_filename': 'application.css',
@@ -181,11 +191,27 @@ PIPELINE = {
     'JAVASCRIPT': {
         'application': {
             'source_filenames': (
-                'myapp1/javascripts/*.js',
-                'assets/javascripts/jquery.cookie.js',
-                'assets/javascripts/bootstrap/js/bootstrap.min.js',
-                'assets/javascripts/bootstrap/js/bootstrap.min.js',
-                'assets/javascripts/jquery-ui.min.js',
+                # -- jquery
+                'vendor/jquery/jquery.min.js',
+                # -- js-cookie
+                'vendor/js-cookie/js.cookie.min.js',
+                # -- bootstrap
+                'vendor/bootstrap/js/bootstrap.bundle.min.js',
+                # -- autocompleting by jquery-ui
+                'vendor/jquery-ui/version.js',
+                'vendor/jquery-ui/widget.js',
+                'vendor/jquery-ui/position.js',
+                'vendor/jquery-ui/keycode.js',
+                'vendor/jquery-ui/unique-id.js',
+                'vendor/jquery-ui/safe-active-element.js',
+                'vendor/jquery-ui/widgets/autocomplete.js',
+                'vendor/jquery-ui/widgets/menu.js',
+                # ---
+                'myapp1/javascripts/app_instructions.js',
+                'myapp1/javascripts/autocomplete.js',
+                'myapp1/javascripts/tooltip.js',
+                'myapp1/javascripts/calendar.js',
+                'myapp1/javascripts/index.js',
             ),
             'output_filename': 'application.js',
         }
