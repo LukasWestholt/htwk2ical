@@ -186,14 +186,16 @@ def extract_modules(html, group_id, sg_modules_dict):
                 r'DWV[\t ]+(\d+|[a-zA-Z])(?:[\s,]|$)+'
             ]
 
-            regex_calc = [re.search(r, notes) for r in regexes]
-            workgroups = [x for m in regex_calc if m for x in m.groups() if x] if notes else []
+            workgroups = []
+            if notes:
+                regex_calc = [re.search(r, notes) for r in regexes]
+                workgroups = [x for m in regex_calc if m for x in m.groups() if x]
 
-            for workgroup in workgroups:
-                if workgroup not in module.workgroups:
-                    module.workgroups.append(workgroup)
-            if module.workgroups and None in regex_calc:
-                module.workgroups.append(no_workgroup_str)
+                for workgroup in workgroups:
+                    if workgroup not in module.workgroups:
+                        module.workgroups.append(workgroup)
+                if module.workgroups and None in regex_calc:
+                    module.workgroups.append(no_workgroup_str)
 
             # set([z for x in module.appointment_set.values_list('workgroups') for y in x for z in y if z])
             module.save()

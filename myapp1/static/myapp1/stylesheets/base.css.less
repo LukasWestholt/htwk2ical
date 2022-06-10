@@ -41,14 +41,27 @@
        url('../fonts/inconsolata-v30-latin-regular.svg#Inconsolata') format('svg'); /* Legacy iOS */
 }
 
+.font-default() {
+  font-weight:300;
+  font-family: Quicksand, "Noto Sans", Arial, Helvetica, sans-serif;
+}
+
+.font-inconsolata() {
+  font-weight:300;
+  font-family: Inconsolata, Quicksand, Arial, Helvetica, sans-serif;
+}
+
+.font-noto_sans() {
+  font-weight:300;
+  font-family: "Noto Sans", Quicksand, Arial, Helvetica, sans-serif;
+}
+
 // GENERIC
 // -----------------------------------------------------------------------------
 
 body {
-  background:url('../images/layout/pattern3.png') repeat top left;
-  background-attachment:fixed;
-  font-weight:300;
-  font-family: Inconsolata, Quicksand, "Noto Sans", Arial, Helvetica, sans-serif;
+  background: url('../images/layout/pattern3.png') repeat fixed top left;
+  .font-default();
 }
 h1 {text-align:center;}
 hr {height:1px; margin:50px 0; border:0; #gradient > .fade();}
@@ -62,7 +75,7 @@ hr {height:1px; margin:50px 0; border:0; #gradient > .fade();}
   .navbar-collapse {
     float:right;
     background:transparent;
-    font-family: "Noto Sans", Arial, Helvetica, sans-serif;
+    .font-noto_sans();
     @media (max-width: 767px) {float:none; margin-top:10px; text-align:center;}
     a {padding-right:20px;}
     li:last-of-type a {padding-right:15px;}

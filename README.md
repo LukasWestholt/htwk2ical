@@ -1,4 +1,3 @@
-
 # deployment
 rename .env.default to .env and config values in it.
 
