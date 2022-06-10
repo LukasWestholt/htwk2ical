@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="rebuild_cache" type="Python.DjangoServer" factoryName="Django server">
+  <configuration default="false" name="init (Management Command)" type="Python.DjangoServer" factoryName="Django server">
     <module name="betterhtwk2ical" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
@@ -19,7 +19,7 @@
     <option name="runTestServer" value="false" />
     <option name="runNoReload" value="false" />
     <option name="useCustomRunCommand" value="true" />
-    <option name="customRunCommand" value="rebuild_cache" />
+    <option name="customRunCommand" value="init" />
     <method v="2" />
   </configuration>
 </component>
