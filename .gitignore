@@ -2,9 +2,8 @@
 .env.docker
 test.py
 db/
-static/*
+/static/*
 node_modules/
-static/
 venv/
 data.json
 HTWK2iCal.ics
