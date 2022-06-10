@@ -1,0 +1,37 @@
+{% include "javascript.html" %}
+<div class="choose-groups-wrapper">
+    {% if landing_page %}
+        <p id="create-calendar-wrapper">
+            <a href="{% url 'calendar' group_ids="" %}" id="create-calendar-cta" class="btn btn-primary">Kalender
+                erstellen</a>
+            (kostenlos und anonym)
+        </p>
+    {% endif %}
+
+    <div id="group-title-wrapper">
+        {% for group in groups|slice:":2" %}
+            <div class="group-title-bg">
+                <input id="group-title-{{ forloop.counter0 }}" class="group-titles form-control input-lg"
+                       name="group-titles[]" value="{{ group.title }}"
+                       data-group-id="{{ group.id }}" placeholder="Name des Studiengangs eintippen..."
+                       type="text" autocomplete="off">
+            </div>
+        {% endfor %}
+        {% if not groups or groups|length < 3 %}
+            <div class="input-group group-title-bg active">
+                <input id="group-title-2" class="group-titles form-control input-lg" name="group-titles[]"
+                       placeholder="Name des Studiengangs eintippen..." type="text" autocomplete="off">
+                {% if landing_page %}
+                    <a href="{% url 'calendar_modules' group_ids="" %}" id="submit-link"
+                       class="btn btn-success btn-lg">Weiter</a>
+                {% elif not groups or groups|length < 2 %}
+                    <a href="#" id="add-group-title" class="btn btn-primary btn-lg">+</a>
+                {% endif %}
+            </div>
+        {% endif %}
+        {% if not landing_page %}
+            <a href="{% url 'calendar_modules' group_ids="" %}" id="submit-link"
+               class="btn btn-success btn-lg">Weiter</a>
+        {% endif %}
+    </div>
+</div>

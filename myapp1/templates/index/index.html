@@ -1,0 +1,103 @@
+{% extends "layouts/application.html" %}
+{% load static %}
+{% block content %}
+<header class="jumbo">
+    <h1>HTWK2iCal</h1>
+    <p class="jumbo-sub">
+        Dein Stundenplan für die HTWK.<br/>
+        Überall verfügbar. Immer up-to-date.
+    </p>
+    {% include "shared/groups_form.html" %}
+</header>
+<div class="features-wrapper">
+    <div class="width-wrapper-lg">
+        <h1 class="features-header">
+            Dein Stundenplan.<br/>
+            Genau so, wie du ihn immer wolltest.
+        </h1>
+
+        <div class="features-details row">
+            <div class="col-sm-4">
+                <span class="bi bi-person-heart"></span>
+                <h2>individuell</h2>
+                <p>
+                    Nur Module, die du wirklich belegst. Mit Namen, die du bestimmst. Auch aus mehreren
+                    Studiengängen. Es ist <strong>dein persönlicher Stundenplan</strong>.
+                </p>
+            </div>
+            <div class="col-sm-4">
+                <span class="bi bi-cloud-fill"></span>
+                <h2>überall</h2>
+                <p>
+                    <strong>Desktop-Rechner, Smartphone oder Tablet</strong>. Dein Stundenplan ist genau da, wo du
+                    ihn benötigst.
+                </p>
+            </div>
+            <div class="col-sm-4">
+                <span class="bi bi-arrow-clockwise"></span>
+                <h2>tagesaktuell</h2>
+                <p>
+                    Dein Stundenplan <strong>aktualisiert sich selbstständig</strong>, damit du nichts verpasst.
+                </p>
+            </div>
+        </div>
+        <p class="features-cta-wrapper text-center">
+            <a href="{% url 'calendar' group_ids="" %}" class="btn btn-success btn-lg text-center">Meinen Kalender jetzt
+                erstellen</a><br/>
+            <small class="text-muted">(du willst es doch auch)</small>
+        </p>
+
+    </div>
+</div>
+
+
+<div class="whatsnew-wrapper">
+    <div class="width-wrapper-sm">
+        <p class="header-addition">Was ist neu?</p>
+        <h1 class="whatsnew-header">HTWK2iCal <strong>2.0</strong> – mit noch mehr Awesomeness</h1>
+
+        <div class="whatsnew-details">
+            <div class="row">
+                <div class="col-sm-5">
+                    <img class="screenshot" src="{% static 'myapp1/images/landing-key-visual.jpg' %}" alt="Screenshot Landingpage"/>
+                </div>
+                <div class="col-sm-7">
+                    <h2>Frisches Design</h2>
+                    <p>
+                        Das neue HTWK2iCal ist moderner, einen Zacken reduzierter und kommt mit grünen Highlights.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row flex-row-reverse">
+                <div class="col-sm-5">
+                    <img class="screenshot" src="{% static 'myapp1/images/landing-studium-generale.png' %}"
+                         alt="Screenshot Landingpage"/>
+                </div>
+                <div class="col-sm-7">
+                    <h2>Studium Generale</h2>
+                    <p>
+                        Auf vielfachen Wunsch hin ist es ab diesem Semester kein Problem mehr, ein Studium Generale
+                        hinzufügen.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-5">
+                    <img src="{% static 'myapp1/images/landing-octocat.gif' %}" alt="Screenshot Landingpage"/>
+                </div>
+                <div class="col-sm-7">
+                    <h2>Open Source</h2>
+                    <p>
+                        Wenn du dich dazu berufen fühlst, darfst du HTWK2iCal bei <a
+                            href="https://github.com/LeEnno/htwk2ical">Github</a> Forken, Pulls Requesten und alles,
+                        was die coolen Kids heutzutage so machen.
+                    </p>
+                    <small>Noch mehr abgefahrene Octocats gibt's im <a href="http://octodex.github.com/">Octodex</a>.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+<div class="accordion-item">
+    <div id="accordion-{{ id }}" class="accordion-header">
+        <a href="#collapse-{{ id }}" class="accordion-toggle {{ id }}" data-bs-toggle="collapse"
+           role="button" aria-expanded="false" aria-labelledby="accordion-{{ id }}"
+           aria-controls="collapse-{{ id }}">{{ title }}</a>
+    </div>
+    <div id="collapse-{{ id }}" class="accordion-collapse collapse" data-bs-parent="#app-instructions">
+        <div class="accordion-body">
+            {% include text %}
+        </div>
+    </div>
+</div>

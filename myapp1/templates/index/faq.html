@@ -1,0 +1,32 @@
+{% extends "layouts/application.html" %}
+{% block content %}
+<div class="content-wrapper">
+
+  <div class="width-wrapper-sm">
+    <h1 class="instruction">FAQ</h1>
+
+    <dl>
+        {% for faq in faqs %}
+            <div class="row">
+              <dt id="faq-{{ forloop.counter0 }}" class="col-sm-5">
+                  {{ faq.question|safe }}
+              </dt>
+                {% if faq.answer == '###app-instructions###' %}
+                    <dd id="app-instructions-wrapper" class="app-instruction-wrapper col-sm-7">{% include "shared/app_instructions.html" %}</dd>
+                {% else %}
+                    <dd class="col-sm-7">{{ faq.answer|safe }}</dd>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </dl>
+
+    <hr />
+
+    <p class="faq-cta-wrapper">
+      Nicht gefunden, wonach du suchst?<br />
+        <a href="{% url 'contact' %}" class="btn btn-success btn-lg">Kontakt aufnehmen</a>
+    </p>
+
+  </div>
+</div>
+{% endblock %}

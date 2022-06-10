@@ -1,0 +1,68 @@
+{% load pipeline %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}HTWK2iCal{% endblock %}</title>
+    {% stylesheet 'application' %}
+    {% if groupMax %}
+        <script>let groupMax = {{ groupMax }};</script>
+    {% endif %}
+</head>
+<body class="{{ landing_page|yesno:"landing-page,not-landing-page" }}">
+<div class="width-wrapper-lg">
+    <nav class="navbar navbar-expand-md navbar-dark navbar-main fs-5">
+        {# for mobile #}
+        <div class="container-fluid">
+            <a href="{% url 'index' %}" class="navbar-brand fs-3">
+                HTWK2iCal
+                <span class="badge bg-success">SS22</span>
+            </a>
+            <button type="button" class="navbar-toggler border border-success border-3" data-bs-toggle="collapse" data-bs-target=".navbar-ex1-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="visually-hidden">Navigation anzeigen/ausblenden</span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav ms-4 mb-2 mb-md-0 ">
+                    <li class="nav-item pe-3">
+                        <a href="{% url 'calendar' group_ids="" %}" class="nav-link {{ add_calendar_page|yesno:"active,not-active" }}" aria-current="{{ add_calendar_page|yesno:"page,false" }}">
+                            <span class="bi bi-plus-square-dotted"></span> Kalender erstellen
+                        </a>
+                    </li>
+                    <li class="nav-item pe-3">
+                        <a href="{% url 'donate' %}" class="nav-link {{ donate_page|yesno:"active,not-active" }}" aria-current="{{ donate_page|yesno:"page,false" }}">
+                            <span class="bi bi-suit-heart"></span> Unterstützen
+                        </a>
+                    </li>
+                    <li class="nav-item pe-3">
+                        <a href="{% url 'faq' %}" class="nav-link {{ faq_page|yesno:"active,not-active" }}" aria-current="{{ faq_page|yesno:"page,false" }}">
+                            <span class="bi bi-question-lg"></span> FAQ
+                        </a>
+                    </li>
+                    <li class="nav-item pe-3">
+                        <a href="{% url 'contact' %}" class="nav-link {{ contact_page|yesno:"active,not-active" }}" aria-current="{{ contact_page|yesno:"page,false" }}">
+                            <span class="bi bi-envelope-fill"></span> Kontakt
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+{% block content %}
+{% endblock %}
+
+<p class="footer">
+    HTWK2iCal wird unterstützt durch <a href="http://www.pictrs.com">Pictrs.com, das Shopsystem für Fotografen</a>.
+</p>
+<ul class="footer-links">
+    <li><a href="{% url 'imprint' %}">Impressum</a></li>
+    <li><a href="{% url 'privacy' %}">Datenschutz</a></li>
+</ul>
+{% javascript 'application' %}
+</body>
+</html>

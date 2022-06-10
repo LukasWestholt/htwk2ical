@@ -1,0 +1,12 @@
+{% if not faq_page %}
+  <h3 class="choose-app-header">Wähle dein Programm:</h3>
+{% endif %}
+<section id="app-instructions" class="accordion{% if faq_page %} faq{% endif %}">
+    {% include "shared/accordion_group.html" with id="google" title="Google Kalender" text="shared/instructions/google.html" %}
+    {% include "shared/accordion_group.html" with id="outlook" title="Microsoft Outlook" text="shared/instructions/outlook.html" %}
+    {% include "shared/accordion_group.html" with id="ical" title="Kalender (OS X)" text="shared/instructions/ical.html" %}
+    {% include "shared/accordion_group.html" with id="lightning" title="Mozilla Thunderbird (mit Lightning-Add-on)" text="shared/instructions/lightning.html" %}
+    {% include "shared/accordion_group.html" with id="ios" title="iPhone" text="shared/instructions/ios.html" %}
+    {% include "shared/accordion_group.html" with id="android" title="Android" text="shared/instructions/android.html" %}
+    {% include "shared/accordion_group.html" with id="winphone" title="Windows Phone" text="shared/instructions/winphone.html" %}
+</section>

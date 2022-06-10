@@ -1,0 +1,8 @@
+{% extends "layouts/application.html" %}
+{% block content %}
+    {% include "calendar/flash_messages.html" %}
+    <div class="content-wrapper">
+        <h1 class="instruction">Wähle alle Studiengänge aus, in denen du Module belegt hast.</h1>
+        {% include "shared/groups_form.html" %}
+    </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% load pipeline %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}HTWK2iCal{% endblock %}</title>
+    {% stylesheet 'application' %}
+</head>
+<body class="landing-page">
+<div class="maintenance-wrapper">
+    {% block content %}
+    {% endblock %}
+
+    <p class="footer muted">
+        HTWK2iCal wird unterstützt durch <a href="http://www.pictrs.com">Pictrs.com, das Shopsystem für Fotografen</a>.
+    </p>
+</div>
+{% javascript 'application' %}
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% extends "layouts/application.html" %}
+{% block content %}
+<div class="content-wrapper content-readable">
+  <div class="width-wrapper-sm">
+    <h1 class="instruction">Impressum</h1>
+
+    <p>nach dem Telemediengesetz (TMG) der Bundesrepublik Deutschland.</p>
+
+    <h2>Kontakt</h2>
+    <p>
+      per Email: enricoschlag (ätt) googlemail (Punkt) com
+    </p>
+
+    <h2>Adresse</h2>
+    <p>Angaben gemäß § 5 TMG und verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:</p>
+    <p>
+      Enrico Herrmann<br />
+      Fritz-Reuter-Str. 23<br />
+      18119 Rostock
+    </p>
+
+    <h2>Haftungsausschluss</h2>
+
+    <h3>Haftung für Inhalte</h3>
+    <p>Ich bemühe mich die Inhalte der Seite aktuell zu halten. Trotz sorgfältiger Bearbeitung bleibt eine Haftung ausgeschlossen.</p>
+    <p>Als Diensteanbieter bin ich gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.</p>
+    <p>Nach §§ 8 bis 10 TMG bin ich als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen. Bei bekannt werden von Rechtsverletzungen, werde ich diese Inhalte umgehend entfernen. Eine diesbezügliche Haftung übernehme ich erst ab dem Zeitpunkt der Kenntnis einer möglichen Rechtsverletzung.</p>            
+
+    <h3>Haftung für Links</h3>
+    <p>Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Für die Inhalte und die Richtigkeit der Informationen verlinkter Websites fremder Informationsanbieter wird keine Gewähr übernommen.</p>
+    <p>Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße <strong>ohne Beanstandung</strong> überprüft. Bei bekannt werden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</p>
+
+    <h2>Urheberrecht</h2>
+    <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.</p>
+
+    <h2>Datenschutz</h2>
+    <p>siehe <a href="{% url 'privacy' %}">Datenschutzerklärung</a></p>
+
+    <h2>Salvatorische Klausel</h2>
+    <p>Sollte eine Bestimmung des Vertrages unwirksam sein, so bleibt die Wirksamkeit der übrigen unberührt. Die unwirksame Bestimmung ist durch eine Bestimmung zu ersetzen, die dem gewollten Zweck in rechtlich zulässiger Weise am nächsten kommt. Das gleiche gilt für Vertragslücken.</p>
+  </div>
+</div>
+{% endblock %}

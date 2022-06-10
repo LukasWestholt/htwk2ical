@@ -1,0 +1,70 @@
+{% extends "layouts/application.html" %}
+{% comment %}
+TODO strong letters not work
+{% endcomment %}
+{% block content %}
+    <div class="content-wrapper">
+        {% if canceled %}
+            <div class="alert alert-error alert-block">
+                <h3>Mist</h3>
+                Das ist wohl etwas schief gelaufen. Gehe zurück und überprüfe bitte deine Eingaben!
+            </div>
+        {% else %}
+            <p class="generated-link">
+                Dein persönlicher <strong>Kalender-Link</strong><br/>
+                <span class="calendar-url">{{ request.get_host }}<strong>{% url 'calendar_get' calendar_secret=secret %}</strong></span>
+            </p>
+
+            <div class="row possibilities width-wrapper-sm">
+                <div class="col-sm-5 possibility-subscribe">
+                    <h2>
+                        Kalender<br/>
+                        <strong>abonnieren</strong>
+                    </h2>
+                    <p class="advantage">
+                        <span class="bi bi-check-lg"></span>
+                        <strong>automatische</strong> Aktualisierung bei Änderungen
+                    </p>
+                    <p class="disadvantage">
+                        <span class="bi bi-patch-minus-fill"></span>
+                        Falls du nicht weißt, wie man einen Kalender abonniert, musst du eine <strong>kurze
+                        Anleitung</strong> lesen ;)
+                    </p>
+                    <div class="text-center">
+                        <div class="d-inline border border-5 border-white">
+                            <a href="{% url 'faq' %}#app-instructions-wrapper" id="show-instructions"
+                            class="btn btn-success btn-lg">» zu den Anleitungen</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5 possibility-download">
+                    <h2>
+                        Kalender<br/>
+                        <strong>herunterladen</strong>
+                    </h2>
+                    <p class="advantage">
+                        <span class="bi bi-check-lg"></span>
+                        <strong>einfach</strong> herunterladen und im Programm der Wahl importieren
+                    </p>
+                    <p class="disadvantage">
+                        <span class="bi bi-patch-minus-fill"></span>
+                        <strong>keine</strong> automatische Aktualisierung bei Änderungen
+                    </p>
+                    <div class="text-center">
+                        <div class="d-inline border border-5 border-white">
+                            <a href="{% url 'calendar_get' calendar_secret=secret %}" class="btn btn-info btn-lg">
+                                <span class="bi bi-download"></span>
+                                Download
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% include "shared/app_instructions.html" %}
+            <div class="alert alert-donate">
+                <h3>Gefällt dir, was du siehst?</h3>
+                <p><a href="{% url 'donate' %}">Unterstütze HTWK2iCal</a>, damit es so bleibt.</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

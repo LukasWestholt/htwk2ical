@@ -1,0 +1,42 @@
+{% extends "layouts/application.html" %}
+{% block content %}
+{% load l10n %}
+<div class="content-wrapper content-wrapper-donate">
+  <div class="width-wrapper-lg">
+    
+    <h1 class="instruction">Unterstützen</h1>
+
+    <div class="donate-status">
+      <div class="progress">
+        <div class="progress-bar {% if amount_percent >= 100 %}progress-bar-success{% else %}progress-bar-danger{% endif %}"
+             role="progressbar" aria-valuenow="{% if amount_percent >= 100 %}100{% else %}{{ amount_percent|unlocalize }}{% endif %}"
+             aria-valuemin="0" aria-valuemax="100" style="width: {% if amount_percent >= 100 %}100{% else %}{{ amount_percent|unlocalize }}{% endif %}%;">
+            {{ amount_percent|floatformat:"0" }}%
+        </div>
+      </div>
+      <p>Status: <strong>{{ amount_current }}</strong> von <strong class="donate-status-goal">{{ amount_max }}</strong> erreicht.</p>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <h3>Warum will ich dein Geld?</h3>
+        <p>Dieses Tool hier ist <strong>kein</strong> offizielles Angebot der HTWK Leipzig. Es wird von mir unter heftigstem Mate-Konsum in meiner Freizeit entwickelt. Ich sorge dafür, dass Fehler behoben werden und helfe aus, wenn ihr Fragen habt. Das macht mir Spaß und das mache ich gern. Ehrlich.</p>
+        <p>Aufgrund der Popularität und der anfallenden Datenmenge musste ich aber von Anfang an etwas für den Betrieb der Datenbank-Server zahlen, was ursprünglich nicht geplant war. Diese Kosten möchte ich ungern allein stemmen.</p>
+      </div>
+
+      <div class="col-sm-6">
+        <h3>Und wieviel davon willst du?</h3>
+        <p><a href="https://www.heroku.com/">Heroku</a>, der Dienst, der das alles hier hostet, kriegt von mir {{ amount_heroku }} pro Monat. Pro Semester macht das ca. <strong>{{ amount_max }}</strong>. Das sollten wir hinkriegen, oder?</p>
+        <p>Alles, was darüber hinaus geht, werde ich spenden.</p>
+      </div>
+    </div>
+
+    <div class="donate-buttons">
+      <p class="donate-buttons-pre-text"><strong>Du bist gefragt.</strong><br />Zeig, dass dir der einfache Überblick über deinen Stundenplan etwas wert ist.</p>
+      <a href="https://paypal.me/htwk2ical" class="btn btn-lg btn-primary" target="_blank">PayPal</a>
+      <a id="show-transfer-info" href="#" class="btn btn-lg btn-warning">Überweisung</a>
+      <p id="donate-transfer-info" class="alert alert-plain">Cool, dass du etwas überweisen möchtest. Allerdings möchte ich meine Kontodaten hier nicht direkt preisgeben. <a href="#" id="donate-mail">Bitte schreib mir eine kurze Mail</a> und du solltest die erforderlichen Daten in Kürze haben. Dank dir :)</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

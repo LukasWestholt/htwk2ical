@@ -1,0 +1,10 @@
+{% if error or notice %}
+  <div class="alert alert-danger">
+    <h3>Ups?! Da ist wohl etwas schiefgelaufen.</h3>
+    {% if error %}
+        {{ error }}
+    {% elif notice %}
+        {{ notice }}
+    {% endif %}
+  </div>
+{% endif %}
