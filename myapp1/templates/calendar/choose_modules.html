@@ -1,0 +1,74 @@
+{% extends "layouts/application.html" %}
+{% load static %}
+{% block content %}
+    {% include "calendar/flash_messages.html" %}
+    <div class="content-wrapper">
+        <h1 class="instruction">
+            Wähle Module aus, die in<br/>
+            deinem Stundenplan angezeigt werden sollen
+        </h1>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+        {% include "shared/groups_form.html" %}
+            <form accept-charset="UTF-8" action="{% url 'calendar_link' %}" class="choose-modules width-wrapper-lg"
+              id="choose-modules" method="post" data-form-type="register,step">
+
+            {% for group in groups %}
+                <h2>{{ group.title }}</h2>
+                <div id="group-modules-wrapper-{{ group.id }}" class="group-modules-wrapper">
+                    <div id="my-app" class="my-container">
+                        {% for module in group.modules %}
+                            {% if forloop.counter0|divisibleby:"3" %}
+                                </div>
+                                <div class="row">
+                            {% endif %}
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                  <span class="input-group-addon">
+                      <input checked="checked" id="module_ids_{{ module.id }}" name="module_ids[]" type="checkbox"
+                             value="{{ module.id }}" data-form-type="other">
+                  </span>
+                                    <input class="form-control" id="module_aliases_{{ module.id }}"
+                                           name="module_aliases[{{ module.id }}]" type="text" value="{{ module.name }}"
+                                           data-form-type="other">
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <input id="group_ids_" name="group_ids[]" type="hidden" value="{{ group.id }}">
+
+                        {% if forloop.counter0 == 0 %}
+                            </div>
+                            <div class="row">
+                            <div class="col-sm-4 studium-generale-ellipses">
+
+                                <%= link_to 'Studium Generale hinzufügen?', '#',
+                                :id => "studium_generale_link",
+                                :class => 'studium-generale-link' %>
+                            </div>
+                        {% endif %}
+                        </div>
+                </div>
+                <p class="row text-center">
+                    <input class="batch-selector" data-target="group-modules-wrapper-{{ module.id }}" checked="checked"
+                           id="uncheck_{{ module.id }}" name="uncheck_{{ module.id }}" type="checkbox"
+                           data-form-type="other">
+                    <label for="uncheck_{{ module.id }}">alle/keine Module</label>
+                </p>
+
+                <hr/>
+            {% endfor %}
+            <button id="add_el">Add element</button>
+
+            <p class="text-center choose-more-groups-wrapper">
+                Du hast Module aus einem anderen Studiengang belegt?<br/>
+                <%= link_to 'Module aus anderem Studiengang hinzufügen',
+                @choose_groups_link,
+                :class => 'btn-link btn-success',
+                :id => 'choose-more-groups-cta' %>
+            </p>
+
+            <input class="btn btn-success btn-lg btn-create-calendar" name="commit" type="submit"
+                   value="Kalender erstellen" data-form-type="action,next">
+        </form>
+    </div>
+{% endblock %}
