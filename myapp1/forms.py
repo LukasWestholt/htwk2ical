@@ -24,10 +24,30 @@ class ModuleForm(forms.Form):
         if 'initial' in kwargs:
             module = kwargs['initial']
             if module['module_workgroups']:
+                choices = [all_workgroup_str] + [
+                    (workgroup, 'Gr. ' + workgroup) if workgroup != no_workgroup_str[0] else no_workgroup_str
+                    for workgroup in sorted(module['module_workgroups'])
+                ]
                 self.fields['module_workgroups'] = forms.ChoiceField(
-                    choices=module['module_workgroups']
+                    widget=forms.RadioSelect,
+                    choices=choices
                 )
-                self.initial['module_workgroups'] = 'ALL'
+                self.initial['module_workgroups'] = all_workgroup_str[0]
+        elif 'data' in kwargs and 'prefix' in kwargs:
+            data = kwargs['data']
+            module = Module.objects.get(id=data[kwargs['prefix'] + "-module_id"])
+            print(sorted(module.workgroups))
+            choices = [all_workgroup_str] + [
+                (workgroup, 'Gr. ' + workgroup) if workgroup != no_workgroup_str[0] else no_workgroup_str
+                for workgroup in sorted(module.workgroups)
+            ]
+            self.fields['module_workgroups'] = forms.ChoiceField(
+                widget=forms.RadioSelect,
+                choices=choices,
+                required=False
+            )
+        else:
+            raise NotImplementedError
 
     def clean_module_id(self):
         data = self.cleaned_data['module_id']
@@ -51,11 +71,7 @@ class CalendarFormset(BaseFormSet):
             initial=[{
                 'module_aliases': module.name,
                 'module_id': module.id,
-                'module_workgroups': ([all_workgroup_str] if module.workgroups else []) +
-                [
-                    (workgroup, 'Gr. ' + workgroup) if workgroup != no_workgroup_str[1] else no_workgroup_str
-                    for workgroup in module.workgroups
-                ]
+                'module_workgroups': module.workgroups
             } for module in form.group_modules]
             if not form.is_bound else None,
             prefix='module-%s-%s' % (
@@ -127,4 +143,3 @@ CalendarFormset = formset_factory(CalendarForm, formset=CalendarFormset, extra=0
 
 # TODO https://docs.djangoproject.com/en/4.0/topics/forms/formsets/#understanding-the-managementform-1
 # form-#-DELETE
-

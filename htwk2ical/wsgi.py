@@ -1,5 +1,5 @@
 """
-WSGI config for betterhtwk2ical project.
+WSGI config for htwk2ical project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'betterhtwk2ical.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'htwk2ical.settings')
 
 application = get_wsgi_application()

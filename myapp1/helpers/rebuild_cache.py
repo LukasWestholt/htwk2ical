@@ -183,22 +183,25 @@ def extract_modules(html, group_id, sg_modules_dict):
                 r'(?:(?:\+|,[\t ]*)(\d+|[a-zA-Z]))?'
                 r'(?:(?:\+|,[\t ]*)(\d+|[a-zA-Z]))?'
                 r'(?:[\s,]|$)+',
+
                 r'DWV[\t ]+(\d+|[a-zA-Z])(?:[\s,]|$)+'
             ]
 
             workgroups = []
             if notes:
+                need_to_save = False
                 regex_calc = [re.search(r, notes) for r in regexes]
                 workgroups = [x for m in regex_calc if m for x in m.groups() if x]
 
                 for workgroup in workgroups:
                     if workgroup not in module.workgroups:
-                        module.workgroups.append(workgroup)
-                if module.workgroups and None in regex_calc:
-                    module.workgroups.append(no_workgroup_str)
-
-            # set([z for x in module.appointment_set.values_list('workgroups') for y in x for z in y if z])
-            module.save()
+                        module.add_workgroup(workgroup)
+                        need_to_save = True
+                if module.workgroups and all(x is None for x in regex_calc) and no_workgroup_str[0] not in module.workgroups:
+                    module.add_workgroup(no_workgroup_str[0])
+                    need_to_save = True
+                if need_to_save:
+                    log_write((module.save(), True))
 
             appointment_hash = {
                 "weeks": string_to_week_array(module_arr[0]),

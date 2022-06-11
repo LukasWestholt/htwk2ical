@@ -19,7 +19,7 @@ run test server:
 - django-admin makemessages --all -i venv
 
 
-- docker exec -t -i betterhtwk2ical_nginx_1 /bin/sh
+- docker exec -t -i htwk2ical_nginx_1 /bin/sh
 - python manage.py collectstatic
 
 docker-compose up -d --build

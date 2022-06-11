@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/betterhtwk2ical.iml" filepath="$PROJECT_DIR$/.idea/betterhtwk2ical.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/htwk2ical.iml" filepath="$PROJECT_DIR$/.idea/htwk2ical.iml" />
     </modules>
   </component>
 </project>

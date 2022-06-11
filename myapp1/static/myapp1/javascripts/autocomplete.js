@@ -57,8 +57,8 @@ $(function () {
           val       = $el.val(),
           groupID = $el.data('group-id');
 
-      // skip placeholder fallback and empty values
-      if ($el.hasClass('hasPlaceholder') || !val)
+      // skip empty values
+      if (!val)
         return;
 
       // if value is invalid: prevent submit and show tooltip

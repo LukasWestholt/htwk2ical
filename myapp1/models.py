@@ -6,7 +6,10 @@ import urllib.parse
 import hashlib
 import random
 
-from config import latest_valid_date, start_date, start_week
+from config import latest_valid_date, start_date, start_week, FULL_DOMAIN
+
+
+MAX_LENGTH_WORKGROUP = 5
 
 
 class TimeStampMixin(models.Model):
@@ -38,11 +41,17 @@ class Group(models.Model):
 class Module(models.Model):
     name = models.CharField(max_length=200)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
-    workgroups = ArrayField(models.CharField(max_length=5), default=list)
+    workgroups = ArrayField(models.CharField(max_length=MAX_LENGTH_WORKGROUP), default=list)
 
     class Meta:
         unique_together = ('name', 'group')
         ordering = ['name']
+
+    def add_workgroup(self, txt):
+        if len(txt) <= MAX_LENGTH_WORKGROUP:
+            self.workgroups.append(txt)
+        else:
+            raise ValueError("workgroup name to big")
 
     def __str__(self):
         return self.name
@@ -79,6 +88,14 @@ class ModuleAlias(models.Model):
         unique_together = ('module', 'custom_name')
 
 
+class ModuleWorkgroup(models.Model):
+    module = models.ForeignKey(Module, on_delete=models.CASCADE)
+    workgroup = models.CharField(max_length=MAX_LENGTH_WORKGROUP)
+
+    class Meta:
+        unique_together = ('module', 'workgroup')
+
+
 # Generates a new secret by creating an MD5-hash of the current UNIX-time (ms
 # since 01.01.1970) with a random number appended. By checking whether the
 # generated secret exists we make sure it stays unique.
@@ -96,7 +113,8 @@ class Calendar(TimeStampMixin):
     secret = models.CharField(max_length=8, default=generate_secret, unique=True)
     modules = models.ManyToManyField(Module)
     groups = models.ManyToManyField(Group)
-    aliases = models.ManyToManyField(ModuleAlias)
+    aliases = models.ManyToManyField(ModuleAlias)  # TODO
+    workgroups = models.ManyToManyField(ModuleWorkgroup)
 
     def events(self):
         secret = self.secret
@@ -109,7 +127,7 @@ class Calendar(TimeStampMixin):
             return [{
                 "summary":     "Kalender aktualisieren",
                 "description": "Dein Kalender ist nicht mehr gültig. "
-                               "Bitte besuche http://www.htwk-stundenplan.de, um einen neuen zu erstellen.",
+                               "Bitte besuche " + FULL_DOMAIN + ", um einen neuen zu erstellen.",
                 "start":       now,
                 "end":         event_end,
                 "uid":         secret + "_" + now.strftime(time_format) + "-" + event_end.strftime(time_format) +
@@ -117,18 +135,30 @@ class Calendar(TimeStampMixin):
             }]
 
         events = []
+
         for module in self.modules.all():
+
+            name = module.name
+            for x in self.aliases.all():
+                if x.module.id == module.id:
+                    name = x.custom_name
+
+            fitting_workgroup = False
+            for x in self.workgroups.all():
+                if x.module.id == module.id:
+                    fitting_workgroup = x.workgroup
 
             # TODO
             # re.search(r"\s*SCHWARZ.*Gr.\s*([" + "".join([str(y) if y != prof_schwarz_group else "" for y in range(1, 4)]) + r"]).*", desc)
 
             for ap in module.appointment_set.all():
+                if fitting_workgroup and len(ap.workgroups) != 0:
+                    if fitting_workgroup not in ap.workgroups:
+                        continue
+
                 location = ap.location if ap.location else ""
-                summary = module.name + ("(" + ap.type + ")" if ap.type else "")
+                summary = name + (" (" + ap.type + ")" if ap.type else "")
                 description = [x for x in [ap.lecturer, ap.notes] if x]
-                skip = False
-                if skip:
-                    continue
                 for week in ap.weeks:
                     day_start = timezone.localtime(start_date) + timedelta(weeks=(week - start_week), days=ap.weekday)
                     event_start = day_start + timedelta(seconds=ap.start)
@@ -143,7 +173,7 @@ class Calendar(TimeStampMixin):
                             "end":         event_end,
                             "uid":         secret + "_" + event_start.strftime(time_format) + "-" +
                                            event_end.strftime(time_format) + "_" + summary + "_" +
-                                           urllib.parse.quote(module.name.encode('utf8'))
+                                           urllib.parse.quote(name.encode('utf8'))
                         }
                     )
         return events

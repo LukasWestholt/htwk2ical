@@ -1,6 +1,11 @@
 {
-  "name": "betterhtwk2ical",
+  "name": "htwk2ical",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/LukasWestholt/htwk2ical.git"
+  },
+  "license": "GPL-3.0-only",
   "dependencies": {
     "bootstrap": "^5.1.3",
     "bootstrap-icons": "^1.8.1",

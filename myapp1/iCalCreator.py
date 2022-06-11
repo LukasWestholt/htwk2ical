@@ -5,6 +5,8 @@ import icalendar
 import datetime
 import pytz
 
+from config import INFO, DOMAIN
+
 
 def create(events, now, secret):
     new_cal = icalendar.Calendar()
@@ -25,7 +27,7 @@ def create(events, now, secret):
     new_cal.add('X-WR-CALDESC', secret)
     new_cal.add('X-WR-CALNAME', secret)
     new_cal.add('X-WR-TIMEZONE', 'Europe/Berlin')
-    new_cal.add('PRODID', '-//htwk-stundenplan.de//ENNOCAL 2.1//DE')
+    new_cal.add('PRODID', '-//' + DOMAIN + '//' + INFO + '//DE')
     new_cal.add('CALSCALE', 'GREGORIAN')
     new_cal.add('VERSION', '2.0')
 

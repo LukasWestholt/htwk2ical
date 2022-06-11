@@ -166,8 +166,21 @@ $(function () {
 
   $('.group-modules-wrapper').each(function() {
     $(this).on('click', '.del_el', (e) => {
-      let source = $(e.target).closest('.input-group');
-      delete_module(source);
+        e.preventDefault();
+        let source = $(e.target).closest('.input-group');
+        let dropdown1 = bootstrap.Dropdown.getInstance(source.children('.dropdown-toggle'));
+        if (dropdown1) {
+            dropdown1.hide();
+        }
+        delete_module(source);
+    });
+    $(this).on('change', ':radio', (e) => {
+        let source = $(e.target);
+        if (source.parents('.dropdown-item').hasClass('default-item')) {
+            source.closest('.input-group').find('.dropdown-icon').removeClass('bi-gear-fill').addClass('bi-gear');
+        } else {
+            source.closest('.input-group').find('.dropdown-icon').removeClass('bi-gear').addClass('bi-gear-fill');
+        }
     });
   });
 

@@ -10,6 +10,16 @@ SECRETS = dotenv_values(".env")
 
 tz = zoneinfo.ZoneInfo('Europe/Berlin')
 
+# htwk2ical version
+VERSION = '3.0'
+
+# htwk2ical info
+INFO = 'htwk2ical ' + VERSION
+
+# htwk2ical domain
+DOMAIN = 'htwk-stundenplan.de'
+FULL_DOMAIN = 'http://' + DOMAIN
+
 # maintenance mode
 is_maintenance = False
 
@@ -35,4 +45,4 @@ studium_generale_html_url = ("https://stundenplan.htwk-leipzig.de/ss/Berichte/Te
                              "###SLUG###?template=UNEinzelLV&weeks=14-35", "ISO-8859-1")
 group_id_divider = '-'
 no_workgroup_str = ('NO', 'Keine Gruppe')
-all_workgroup_str = ('ALL', 'alle')
+all_workgroup_str = ('ALL', 'alle Termine')

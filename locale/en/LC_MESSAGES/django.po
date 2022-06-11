@@ -18,10 +18,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\betterhtwk2ical\settings.py:118
+#: .\htwk2ical\settings.py:118
 msgid "Deutsch"
 msgstr "German"
 
-#: .\betterhtwk2ical\settings.py:119
+#: .\htwk2ical\settings.py:119
 msgid "Englisch"
 msgstr "English"

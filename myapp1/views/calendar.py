@@ -5,8 +5,8 @@ from django.http import JsonResponse, Http404, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
-from myapp1.models import GroupCache, Group, Module, Calendar, ModuleAlias
-from config import group_id_divider
+from myapp1.models import GroupCache, Group, Module, Calendar, ModuleAlias, ModuleWorkgroup
+from config import group_id_divider, all_workgroup_str
 from myapp1.forms import CalendarFormset
 from myapp1 import iCalCreator
 
@@ -43,6 +43,7 @@ def choose_modules(request, group_ids):
                   context={
                       "add_calendar_page": True,
                       "choose_groups_link": choose_groups_link,
+                      "all_workgroup_str": all_workgroup_str,
                       "formset": formset
                   })
 
@@ -60,18 +61,23 @@ def get_link(request):
     else:
         print("Got cleaned data: " + str(formset.cleaned_data))
 
-    groups = [form['group_id'] for form in formset.cleaned_data]
-    modules = [module for form in formset.cleaned_data for module in form['modules'] if module['module_aliases']]
+    cleaned_groups = [form['group_id'] for form in formset.cleaned_data]
+    cleaned_modules = [module for form in formset.cleaned_data for module in form['modules'] if module['module_aliases']]
     cal = Calendar.objects.create()
-    cal.groups.set(groups)
-    cal.modules.set([module['module_id'] for module in modules])
-    for alias_set in modules:
-        module = Module.objects.get(id=alias_set['module_id'])
-        if module.name != alias_set['module_aliases']:
-            print("Add alias: " + alias_set['module_aliases'] + " " + str(alias_set['module_id']))
-            alias, _ = ModuleAlias.objects.get_or_create(custom_name=alias_set['module_aliases'],
-                                                         module_id=alias_set['module_id'])
+    cal.groups.set(cleaned_groups)
+    cal.modules.set([module['module_id'] for module in cleaned_modules])
+    for cleaned_module in cleaned_modules:
+        module = Module.objects.get(id=cleaned_module['module_id'])
+        if module.name != cleaned_module['module_aliases']:
+            print("Add alias: " + cleaned_module['module_aliases'] + " " + str(cleaned_module['module_id']))
+            alias, _ = ModuleAlias.objects.get_or_create(custom_name=cleaned_module['module_aliases'],
+                                                         module_id=cleaned_module['module_id'])
             cal.aliases.add(alias)
+        if cleaned_module['module_workgroups'] and cleaned_module['module_workgroups'] != all_workgroup_str[0]:
+            print("Add workgroup: " + cleaned_module['module_workgroups'] + " " + str(cleaned_module['module_id']))
+            workgroup, _ = ModuleWorkgroup.objects.get_or_create(workgroup=cleaned_module['module_workgroups'],
+                                                                 module_id=cleaned_module['module_id'])
+            cal.workgroups.add(workgroup)
 
     return render(request, 'calendar/get_link.html',
                   context={

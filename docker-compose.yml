@@ -11,7 +11,7 @@ services:
 
   django:
     build: .
-    command: gunicorn betterhtwk2ical.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn htwk2ical.wsgi:application --bind 0.0.0.0:8000
     expose:
       - 8000
     volumes:

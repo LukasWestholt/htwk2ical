@@ -19,10 +19,24 @@
                             {{ form.modules.management_form }}
                             {% for module_form in form.modules %}
                                 <div class="input-group">
-                                    {{module_form.module_aliases}}
-                                    {{module_form.module_workgroups}}
-                                    {{module_form.module_id}}
-                                  <button type="button" class="del_el"><span class="bi bi-trash"></span></button>
+                                    {{ module_form.module_aliases }}
+                                    {{ module_form.module_id }}
+                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                        <span class="dropdown-icon bi bi-gear{% if module_form.module_workgroups %} text-success{% endif %}"></span>
+                                    </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            {% if module_form.module_workgroups %}
+                                                <li><label class="dropdown-item disabled">Gruppenauswahl</label></li>
+                                                {% for workgroup in module_form.module_workgroups %}
+                                                    <li><label class="dropdown-item allow-focus{% if all_workgroup_str.1 == workgroup.choice_label %} default-item{% endif %}">
+                                                        {{ workgroup }}
+                                                    </label></li>
+                                                {% endfor %}
+                                                <li><hr class="dropdown-divider"></li>
+                                            {% endif %}
+                                            <li><a class="dropdown-item del_el" href="#"><span class="bi bi-trash"></span>Löschen</a></li>
+                                        </ul>
+
                                 </div>
                             {% endfor %}
                             {% for input in form.hidden_fields %}
