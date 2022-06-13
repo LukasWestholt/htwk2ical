@@ -7,6 +7,8 @@ node_modules/
 data.json
 HTWK2iCal.ics
 
+deployment.xml
+
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/python
