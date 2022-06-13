@@ -14,7 +14,7 @@ tz = zoneinfo.ZoneInfo('Europe/Berlin')
 VERSION = '3.0'
 
 # htwk2ical info
-INFO = 'htwk2ical ' + VERSION
+INFO = 'HTWK2iCal ' + VERSION
 
 # htwk2ical domain
 DOMAIN = 'htwk-stundenplan.de'

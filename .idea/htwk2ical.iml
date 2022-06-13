@@ -17,6 +17,8 @@
       <excludeFolder url="file://$MODULE_DIR$/venv" />
       <excludeFolder url="file://$MODULE_DIR$/db" />
       <excludeFolder url="file://$MODULE_DIR$/static" />
+      <excludeFolder url="file://$MODULE_DIR$/myapp1/static/myapp1/fonts" />
+      <excludePattern pattern="LICENSE" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

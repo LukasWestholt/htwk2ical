@@ -113,8 +113,9 @@ class Calendar(TimeStampMixin):
     secret = models.CharField(max_length=8, default=generate_secret, unique=True)
     modules = models.ManyToManyField(Module)
     groups = models.ManyToManyField(Group)
-    aliases = models.ManyToManyField(ModuleAlias)  # TODO
+    aliases = models.ManyToManyField(ModuleAlias)
     workgroups = models.ManyToManyField(ModuleWorkgroup)
+    #password = models.
 
     def events(self):
         secret = self.secret

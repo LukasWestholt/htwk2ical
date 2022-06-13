@@ -32,7 +32,7 @@ class ModuleForm(forms.Form):
                     widget=forms.RadioSelect,
                     choices=choices
                 )
-                self.initial['module_workgroups'] = all_workgroup_str[0]
+                self.initial['module_workgroups'] = module['default_workgroup']
         elif 'data' in kwargs and 'prefix' in kwargs:
             data = kwargs['data']
             module = Module.objects.get(id=data[kwargs['prefix'] + "-module_id"])
@@ -71,7 +71,8 @@ class CalendarFormset(BaseFormSet):
             initial=[{
                 'module_aliases': module.name,
                 'module_id': module.id,
-                'module_workgroups': module.workgroups
+                'module_workgroups': module.workgroups,
+                'default_workgroup': module.default_workgroup
             } for module in form.group_modules]
             if not form.is_bound else None,
             prefix='module-%s-%s' % (

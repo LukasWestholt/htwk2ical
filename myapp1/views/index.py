@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse
-from config import is_maintenance, group_id_divider
+from config import is_maintenance, group_id_divider, INFO
 from myapp1.models import GroupCache
 
 
@@ -10,7 +10,8 @@ def index(request):
     return render(request, 'index/index.html',
                   context={
                       "landing_page": True,
-                      "divider": group_id_divider
+                      "divider": group_id_divider,
+                      "info": INFO
                   })
 
 
