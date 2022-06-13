@@ -30,10 +30,44 @@ def choose_modules(request, group_ids):
             continue
 
         modules = list(group.module_set.all())
+        for module in modules:
+            module.default_workgroup = all_workgroup_str[0]
         groups.append({"group_id": group.id, "title": group.title, "modules": modules})
 
     if not groups:
         return send_to_groups_page(request)
+
+    choose_groups_link = reverse('calendar', kwargs={'group_ids': group_id_divider.join(
+        [str(group["group_id"]) for group in groups]
+    )})
+    formset = CalendarFormset(initial=groups)
+    return render(request, 'calendar/choose_modules.html',
+                  context={
+                      "add_calendar_page": True,
+                      "choose_groups_link": choose_groups_link,
+                      "all_workgroup_str": all_workgroup_str,
+                      "formset": formset
+                  })
+
+
+def calendar_edit(request, calendar_secret):
+    try:
+        calendar = Calendar.objects.filter(secret=calendar_secret).get()
+    except Calendar.DoesNotExist:
+        return send_to_groups_page(request)
+
+    modules = list(calendar.modules.all())
+    for module in modules:
+        module.default_workgroup = all_workgroup_str[0]
+        for module_workgroup in calendar.workgroups.all():
+            if module_workgroup.module_id == module.id:
+                module.default_workgroup = module_workgroup.workgroup
+        for module_alias in calendar.aliases.all():
+            if module_alias.module_id == module.id:
+                module.name = module_alias.custom_name
+    groups = []
+    for group in calendar.groups.all():
+        groups.append({"calendar_id": calendar.id, "group_id": group.id, "title": group.title, "modules": modules})
 
     choose_groups_link = reverse('calendar', kwargs={'group_ids': group_id_divider.join(
         [str(group["group_id"]) for group in groups]

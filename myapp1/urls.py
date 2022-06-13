@@ -1,4 +1,4 @@
-from django.urls import path, register_converter
+from django.urls import path, register_converter, re_path
 
 from . import converters
 from . import views
@@ -16,5 +16,6 @@ urlpatterns = [
     path('privacy', views.index.privacy, name='privacy'),
     path('calendar/<group_ids_converter:group_ids>', views.calendar.choose_groups, name='calendar'),
     path('calendar/modules/<group_ids_converter:group_ids>', views.calendar.choose_modules, name='calendar_modules'),
+    re_path(r'^calendar/edit/(?P<calendar_secret>\w{8})$', views.calendar.calendar_edit, name='calendar_edit'),
     path('calendar/link', views.calendar.get_link, name='calendar_link')
 ]
