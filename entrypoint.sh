@@ -1,4 +1,5 @@
 #!/bin/sh
+# don't forget: git update-index --chmod=+x entrypoint.sh
 
 if [ "$WAIT" = "1" ]
 then
