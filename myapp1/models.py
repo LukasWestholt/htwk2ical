@@ -54,7 +54,7 @@ class Module(models.Model):
             raise ValueError("workgroup name to big")
 
     def __str__(self):
-        return [self.name, self.workgroups]
+        return str([self.name, self.workgroups])
 
 
 class Appointment(models.Model):
