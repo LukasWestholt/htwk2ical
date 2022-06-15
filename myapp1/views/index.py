@@ -111,6 +111,7 @@ def contact(request):
 def maintenance(request):
     return render(request, 'index/maintenance.html',
                   context={'start_date': '01.04.', 'term_str': 'Sommersemester 2022'})
+    # TODO copy to configfile
 
 
 def imprint(request):

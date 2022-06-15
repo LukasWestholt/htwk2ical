@@ -54,14 +54,10 @@ class Module(models.Model):
             raise ValueError("workgroup name to big")
 
     def __str__(self):
-        return self.name
+        return [self.name, self.workgroups]
 
 
 class Appointment(models.Model):
-    # data = models.JSONField(unique=True)
-    """weeks = models.CharField(max_length=200, validators=[int_list_validator(
-        message="Enter only digits separated by commas.",
-    )])"""
     weeks = ArrayField(models.IntegerField())
     weekday = models.IntegerField()
     start = models.IntegerField()
@@ -76,7 +72,8 @@ class Appointment(models.Model):
 
     def __str__(self):
         return str(
-            [self.weeks, self.weekday, self.start, self.end, self.location, self.type, self.lecturer, self.notes]
+            [self.weeks, self.weekday, self.start, self.end, self.location, self.type, self.lecturer, self.notes,
+             self.workgroups]
         )
 
 
@@ -115,7 +112,6 @@ class Calendar(TimeStampMixin):
     groups = models.ManyToManyField(Group)
     aliases = models.ManyToManyField(ModuleAlias)
     workgroups = models.ManyToManyField(ModuleWorkgroup)
-    #password = models.
 
     def events(self):
         secret = self.secret
@@ -148,9 +144,6 @@ class Calendar(TimeStampMixin):
             for x in self.workgroups.all():
                 if x.module.id == module.id:
                     fitting_workgroup = x.workgroup
-
-            # TODO
-            # re.search(r"\s*SCHWARZ.*Gr.\s*([" + "".join([str(y) if y != prof_schwarz_group else "" for y in range(1, 4)]) + r"]).*", desc)
 
             for ap in module.appointment_set.all():
                 if fitting_workgroup and len(ap.workgroups) != 0:

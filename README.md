@@ -1,3 +1,8 @@
+## Changelog
+- Module ohne Titel werden nicht mehr ignoriert, 
+sondern es wird der Titel 
+"[Modul ohne Titel]" angezeigt
+
 # deployment
 rename .env.default to .env and config values in it.
 
@@ -25,3 +30,6 @@ run test server:
 docker-compose up -d --build
 docker-compose exec django python manage.py migrate --noinput
 docker-compose exec django python manage.py collectstatic --no-input --clear
+docker-compose exec django python manage.py rebuild_cache
+
+# python manage.py flush --no-input

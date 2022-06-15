@@ -17,7 +17,6 @@ from .fetch import fetch_contents_from_url
 def rebuild_cache():
     sg_modules_dict = get_groups()
     get_cached_modules(sg_modules_dict)
-    print("Done.")
 
 
 def get_groups():
@@ -83,6 +82,7 @@ def get_cached_modules(sg_modules_dict):
     not_found = []
     for index, group_object in enumerate(Group.objects.all()):
         ordered_title = str(index+1) + " " + group_object.name
+        assert(index+1 == group_object.id)
         url, default_encoding = \
             studium_generale_html_url if group_object.is_studium_generale() else single_group_html_url
         slug = group_object.sg_url or group_object.name
@@ -164,7 +164,7 @@ def extract_modules(html, group_id, sg_modules_dict):
 
             module_title = module_arr[4]
             if module_title == "&nbsp;":
-                module_title = "[Veranstaltung ohne Titel]"
+                module_title = "[Modul ohne Titel]"
             assert(module_title == module_title.strip())
 
             def check(text):
@@ -177,6 +177,7 @@ def extract_modules(html, group_id, sg_modules_dict):
             lecturer = check(module_arr[5 if group.is_studium_generale() else 6] or module_lecturer)
             notes = check(module_arr[7])
             # https://regex101.com/r/dSS21T/1
+            # https://regex101.com/r/dSS21T/2
             # https://regex101.com/r/IcZaPU/1
             regexes = [
                 r'[Gg]r(?:uppe|\.)[\t ]+(\d+|[a-zA-Z])'
@@ -190,14 +191,14 @@ def extract_modules(html, group_id, sg_modules_dict):
             workgroups = []
             if notes:
                 need_to_save = False
-                regex_calc = [re.search(r, notes) for r in regexes]
-                workgroups = [x for m in regex_calc if m for x in m.groups() if x]
+                regex_calc = [match for regex in regexes for match in re.findall(regex, notes)]
+                workgroups = [x for m in regex_calc for x in m if x]
 
                 for workgroup in workgroups:
                     if workgroup not in module.workgroups:
                         module.add_workgroup(workgroup)
                         need_to_save = True
-                if module.workgroups and all(x is None for x in regex_calc) and no_workgroup_str[0] not in module.workgroups:
+                if module.workgroups and not regex_calc and no_workgroup_str[0] not in module.workgroups:
                     module.add_workgroup(no_workgroup_str[0])
                     need_to_save = True
                 if need_to_save:
